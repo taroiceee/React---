@@ -12,13 +12,13 @@ const Counter = (props) => {
     const ctx = useContext(CartContext);
     // 添加购物车的函数
     const addButtonHandler = () => {
-        ctx.addItem(props.meal);
-        console.log(ctx);
+        ctx.cartDispatch({type:'ADD', meal:props.meal});
     };
 
     // 删除食物的函数
     const subButtonHandler = () => {
-        ctx.removeItem(props.meal);
+        
+        ctx.cartDispatch({type:'REMOVE', meal:props.meal});
     };
 
 
