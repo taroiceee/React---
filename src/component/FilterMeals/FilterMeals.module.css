@@ -1,24 +1,22 @@
-.FilterMeals{
+.FilterMeals {
     display: flex;
-    position: fixed;
     align-items: center;
     justify-content: center;
-    left: 0;
-    right: 0;
     height: 120rem;
     background-color: #fff;
-    z-index: 999;
     border-bottom: 1px solid #f2f2f2;
 }
 
-.InputOuter{
+
+
+.InputOuter {
     position: relative;
     display: flex;
     align-items: center;
 }
 
-.SearchInput{
-    width: 650rem;
+.SearchInput {
+    width: 570rem;
     height: 70rem;
     border: none;
     border-radius: 16px;
@@ -28,7 +26,7 @@
     font-size: 32rem;
 }
 
-.SearchIcon{
+.SearchIcon {
     font-size: 40rem;
     position: absolute;
     left: 10rem;

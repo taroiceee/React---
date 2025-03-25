@@ -1,8 +1,8 @@
 import React, { useState, useReducer } from 'react';
 import Meals from './component/Meals/Meals';
 import CartContext from './store/cart-context';
-import FilterMeals from './component/FilterMeals/FilterMeals';
 import Cart from './component/Cart/Cart';
+import Header from './component/Header/Header';
 // import Backdrop from './component/UI/Backdrop/Backdrop';
 
 // 模拟一组食物数据
@@ -108,19 +108,15 @@ const App = () => {
         totalPrice: 0
     });
 
-    // 创建一个过滤meals的函数
-    const filterHandler = (keyword) => {
-        const newMealsData = MEALS_DATA.filter(item => item.title.indexOf(keyword) !== -1);
-        setMealsData(newMealsData);
-    };
-
 
 
     return (
 
         <CartContext.Provider value={{ ...cartData, cartDispatch }}>
             <div>
-                <FilterMeals onFilter={filterHandler} />
+
+                <Header MEALS_DATA={MEALS_DATA}/>
+
                 <Meals
                     mealsData={mealsData}
                 />

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import classes from "./FilterMeals.module.css";
-
 const FilterMeals = (props) => {
 
     const [keyword, setKeyword] = useState("");
@@ -21,13 +20,17 @@ const FilterMeals = (props) => {
 
         //清除定时器，当keyword改变时清除定时器
         return () => {
-            clearTimeout(timer); 
+            clearTimeout(timer);
         }
-    }, [keyword,props]);
+    }, [keyword, props]);
+
+
 
 
     return (
         <div className={classes.FilterMeals}>
+
+
             <div className={classes.InputOuter}>
                 <input type="text"
                     className={classes.SearchInput}

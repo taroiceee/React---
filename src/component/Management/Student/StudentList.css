@@ -1,0 +1,14 @@
+table{
+    width: 700rem;
+    border-collapse: collapse;
+    font-size: 25rem;
+}
+.caption{
+    font-size: 30rem;
+    font-weight: bolder; 
+}
+
+td, th{
+    border: 1px solid #000;
+    text-align: center;
+}
