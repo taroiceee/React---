@@ -1,5 +1,5 @@
 table{
-    width: 700rem;
+    width: 720rem;
     border-collapse: collapse;
     font-size: 25rem;
 }
@@ -11,4 +11,8 @@ table{
 td, th{
     border: 1px solid #000;
     text-align: center;
+}
+
+.button{
+    font-size: 20rem;
 }
