@@ -5,8 +5,9 @@ import StudentForm from "./StudentForm";
 
 const StudentList = (props) => {
     console.log('props', props);
-
+ 
     return (
+        <div className="tableDiv">
         <table>
             <caption>学生列表</caption>
             <thead>
@@ -28,6 +29,7 @@ const StudentList = (props) => {
             </tfoot>
 
         </table>
+        </div>
     );
 };
 

@@ -1,14 +1,30 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import './StudentForm.css';
-import StuContext from "../store/StuContext";
+import StuContext from "../../../store/StuContext";
+import { useGetStudentByIdQuery, useAddStudentMutation, useUpdateStudentMutation } from '../../../store/studentApi';
 
 const StudentForm = (props) => {
+    // 调用钩子来加载数据
+    const { data: stuData } = useGetStudentByIdQuery(props.stuId);
+
+    // 用户修改时，表单中的数据是数据库中最新的数据
     const [inputData, setInputData] = useState({
-        name: props.stu ? props.stu.name : '',
-        age: props.stu ? props.stu.age : '',
-        gender: props.stu ? props.stu.gender : '男',
-        address: props.stu ? props.stu.address : ''
+        name: '',
+        age: '',
+        gender: '男',
+        address: ''
     });
+    const [addStudent, { isSuccess: isAddSuccess }] = useAddStudentMutation();
+    const [updateStudent, { isSuccess: isUpdateSuccess }] = useUpdateStudentMutation();
+
+    
+    useEffect(() => {
+        if (stuData) {
+            setInputData(stuData);
+        }
+    }, [stuData]);
+
+
 
 
     const ctx = useContext(StuContext);
@@ -41,34 +57,51 @@ const StudentForm = (props) => {
         })
     }
 
-    const onsubmit = async (newStu) => {
-        try {
-            const res = await fetch('http://localhost:1337/api/students/create', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": 'application/json'
-                },
-                body: JSON.stringify(
-                    newStu)
-            }
-            );
-            // 判断是否成功
-            if (!res.ok) {
-                throw new Error('删除失败！');
-            }
+    // const onsubmit = async (newStu) => {
+    //     try {
+    //         const res = await fetch('http://localhost:1337/api/students/create', {
+    //             method: 'POST',
+    //             headers: {
+    //                 "Content-Type": 'application/json'
+    //             },
+    //             body: JSON.stringify(
+    //                 newStu)
+    //         }
+    //         );
+    //         // 判断是否成功
+    //         if (!res.ok) {
+    //             throw new Error('删除失败！');
+    //         }
 
-            ctx.fetchData();
-        } catch (e) {
+    //         ctx.fetchData();
+    //     } catch (e) {
 
-        }
-    }
+    //     }
+    // }
     const updateHandler = () => {
-        saveData(props.stu.id, inputData);
+        updateStudent({
+            id: props.stuId,
+            data: {
+                name: inputData.name,
+                age: inputData.age,
+                gender: inputData.gender,
+                address: inputData.address,
+                // documentId:inputData.documentId,
+            }
+        });
+        props.onCancel();
+        console.log('props.stuId',props.stuId,'inputData.id',inputData.id);
+        
     };
 
     const submitHandler = () => {
-        //console.log(inputData);
-        onsubmit(inputData);
+        addStudent(inputData);
+        setInputData({
+            name: '',
+            age: '',
+            gender: '男',
+            address: ''
+        });
     };
 
     const saveData = useCallback(async (id, data) => {
@@ -126,16 +159,16 @@ const StudentForm = (props) => {
 
             <td>
 
-                {props.stu && <>
+                {props.stuId && <>
                     <button onClick={() => props.onCancel()}>取消</button>
                     <button onClick={updateHandler}>确认</button>
                 </>}
-                {!props.stu &&
-                        <button
-                            onClick={submitHandler}
-                        >添加
-                        </button>
-                    }
+                {!props.stuId &&
+                    <button
+                        onClick={submitHandler}
+                    >添加
+                    </button>
+                }
 
             </td>
         </tr>

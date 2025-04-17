@@ -1,63 +1,26 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import classes from './StudentApp.module.css';
-import StudentList from './Student/StudentList';
+import React from 'react';
 
-import StuContext from "./store/StuContext";
+import {useGetStudentsQuery} from "../../store/studentApi";
+import StudentList from './Student/StudentList';
 
 const StudentApp = () => {
 
-    const [stuData, setStuData] = useState([]);
-
-    // 设置加载状态
-    const [loading, setLoading] = useState(false);
-
-    // 设置错误信息
-    const [error, setError] = useState(null);
-
-    // 使用Fetch请求数据，在初始化时发送请求
-    const fetchData = useCallback(async () => {
-        try {
-            setLoading(true);
-            setError(null);
-            const res = await fetch('http://localhost:1337/api/students');
-            //判断请求是否加载成功
-            if (res.ok) {
-                const data = await res.json();
-                setStuData(data.data);
-            } else {
-                throw new Error('数据加载失败！');
-            }
-        } catch (e) {
-            setError(e);
-        } finally {
-            setLoading(false);
-        }
-    }, []);
-
-
-    // 使用useEffect来发送请求，仅在初始化时发送请求
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
-
+        const result = useGetStudentsQuery(null, {
+            pollingInterval:0, // 设置轮询的间隔，单位毫秒 如果为0则表示不轮询
+            skip:false, // 设置是否跳过当前请求，默认false
+            refetchOnMountOrArgChange:false, // 设置是否每次都重新加载数据 false正常使用缓存
+            refetchOnFocus:false, // 是否在重新获取焦点时重载数据
+            refetchOnReconnect:true, // 是否在重新连接后重载数据
+        });
+        const {data: stus, isSuccess, isLoading, refetch} = result; // 调用Api中的钩子查询数据
     
-
-
-    const loadDataHandler = () => {
-        fetchData();
-    };
-
-    return (
-        <StuContext.Provider value={{ fetchData }}>
-            <div className={classes.StudentApp}>
-                <button className={classes.loadButton} onClick={loadDataHandler}>刷新数据</button>
-                {(!loading && !error) && <StudentList stus={stuData} />}
-                {loading && <p>数据加载中...</p>}
-
-                {error && <p>数据加载异常！</p>}
-            </div>
-        </StuContext.Provider>
+    
+        return (
+            <div>
+                <button onClick={() => refetch()}>刷新</button>
+                {isLoading && <p>数据加载中...</p>}
+                {isSuccess && <StudentList stus={stus}/>}
+        </div>
 
     );
 };
