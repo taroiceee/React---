@@ -2,18 +2,20 @@ import React, { useState, useEffect } from "react";
 import classes from './Cart.module.css';
 import iconImg from '../../../../asset/bag.png';
 import CartContext from "../../../../store/cart-context";
+import { useNavigate } from "react-router-dom"
 import CartDetails from "./CartDetails/CartDetails";
-import Checkout from "./Checkout/Checkout";
+// import Checkout from "./Checkout/Checkout";
 
 
 const Cart = () => {
+    const navigate = useNavigate();
 
     const ctx = React.useContext(CartContext);
 
     // 添加一个state来设置详情是否显示
     const [showDetails, setShowDetails] = useState(false);
     // 是否显示结算页面
-    const [showCheckout, setShowCheckout] = useState(false);
+    // const [showCheckout, setShowCheckout] = useState(false);
 
     // 当购物车中没有餐品时，隐藏详情页和结算页面
     // useEffect可以在组件全部渲染完后再执行里面的逻辑，避免了重复渲染
@@ -21,9 +23,9 @@ const Cart = () => {
     useEffect(() => {
         if (ctx.totalAmount === 0) {
             setShowDetails(false);
-            setShowCheckout(false);
+            // setShowCheckout(false);
         }
-    },[ctx.totalAmount,setShowDetails,setShowCheckout]);
+    },[ctx.totalAmount,setShowDetails]);
 
 
     // 添加一个显示详情页的函数
@@ -38,18 +40,19 @@ const Cart = () => {
     //显示结算页面
     const showCheckoutHandler = () => {
         if (ctx.totalAmount === 0) return;
-        setShowCheckout(true);
+        // setShowCheckout(true);
+        navigate('/checkout');
     };
 
     // 隐藏结算页面
-    const hideCheckoutHandler = () => {
-        setShowCheckout(false);
-    };
+    // const hideCheckoutHandler = () => {
+    //     // setShowCheckout(false);
+    // };
 
     return (
         <div className={classes.Cart} onClick={toggleDetailsHandler}>
 
-            {showCheckout && < Checkout onHide={hideCheckoutHandler} />}
+            {/* {showCheckout && < Checkout onHide={hideCheckoutHandler} />} */}
 
             {/*引入购物车的详情*/}
             {showDetails && <CartDetails />}

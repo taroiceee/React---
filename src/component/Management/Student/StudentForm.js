@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect } from 'react';
 import './StudentForm.css';
 import StuContext from "../../../store/StuContext";
-import { useGetStudentByIdQuery, useAddStudentMutation, useUpdateStudentMutation } from '../../../store/studentApi';
+import { useGetStudentByIdQuery, useAddStudentMutation, useUpdateStudentMutation } from '../../../store/Api';
 
 const StudentForm = (props) => {
     // 调用钩子来加载数据

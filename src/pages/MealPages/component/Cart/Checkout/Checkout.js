@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import classes from './Checkout.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
-import CartContext from '../../../store/cart-context';
+import CartContext from '../../../../../store/cart-context';
 import CheckoutItem from './CheckoutItem/CheckoutItem';
 import Bar from './Bar/Bar';
 
@@ -16,7 +16,7 @@ const Checkout = (props) => {
             <div className={classes.Close}>
                 <FontAwesomeIcon icon={faClose}
                     onClick={() => {
-                        // props.onHide();
+                        props.onHide();
                     }} />
 
             </div>

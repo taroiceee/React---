@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { useDelStudentMutation } from '../../../store/studentApi';
+import { useDelStudentMutation } from '../../../store/Api';
 // import StuContext from "../../../store/StuContext";
 import StudentForm from "./StudentForm";
 const Student = (props) => {

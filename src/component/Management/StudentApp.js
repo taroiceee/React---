@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useGetStudentsQuery} from "../../store/studentApi";
+import {useGetStudentsQuery} from "../../../../store/Api";
 import StudentList from './Student/StudentList';
 
 const StudentApp = () => {
